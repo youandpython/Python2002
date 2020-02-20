@@ -106,7 +106,7 @@ def text_reply(msg):
                 itchat.send(msg['ActualNickName']+'在'+timer + '发的文件：', toUserName=room_id_family)
                 itchat.send('@%s@%s' % ('fil', msg['FileName']), toUserName=room_id_family)
             if msg['Type'] == 'Text':
-                if (('[强]' in msg['Content']) and ('@' in msg['Content']) and (len(msg['Content']) < 20)) or (len(msg['Content']) < 5):
+                if (('[强]' in msg['Content']) and ('@' in msg['Content']) and (len(msg['Content']) < 20)) or (len(msg['Content']) < 10):
                     pass
                 else:
                     time.sleep(random.uniform(0.1, 0.3))
