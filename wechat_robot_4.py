@@ -84,53 +84,62 @@ def text_reply(msg):
                 or msg['ActualNickName'] == '音乐老师' \
                 or msg['ActualNickName'] == '体育老师':
             timer = time.strftime("%m-%d %H:%M:%S", time.localtime())
-            if msg['Type'] == 'Recording':
-                msg['Text'](msg['FileName'])
-                time.sleep(random.random())
-                itchat.send(msg['ActualNickName']+'在'+timer + '发的语音：', toUserName=room_id_family)
-                itchat.send('@%s@%s' % ('fil', msg['FileName']), toUserName=room_id_family)
-            if msg['Type'] == 'Picture':
-                msg['Text'](msg['FileName'])
-                time.sleep(random.random())
-                itchat.send(msg['ActualNickName']+'在'+timer + '发的图片：', toUserName=room_id_family)
-                itchat.send('@%s@%s' % ('img', msg['FileName']), toUserName=room_id_family)
-            if msg['Type'] == 'Video':
-                msg['Text'](msg['FileName'])
-                time.sleep(random.random())
-                itchat.send(msg['ActualNickName']+'在'+timer + '发的视频：', toUserName=room_id_family)
-                itchat.send('@%s@%s' % ('vid', msg['FileName']), toUserName=room_id_family)
-            if msg['Type'] == 'Attachment':
-                msg['Text'](msg['FileName'])
-                time.sleep(random.random())
-                itchat.send(msg['ActualNickName']+'在'+timer + '发的文件：', toUserName=room_id_family)
-                itchat.send('@%s@%s' % ('fil', msg['FileName']), toUserName=room_id_family)
-            if msg['Type'] == 'Text':
-                if msg['FromUserName'] == itchat.get_friends(update=True)[0]['UserName']:
+            # li = '[呲牙][强][憨笑]😄[抱拳][鼓掌][偷笑]'
+            if not (
+                    (
+                            ('[强]' in msg['Content'])
+                            and ('@' in msg['Content'])
+                            and (len(msg['Content']) < 15)
+                    )
+                    or (len(msg['Content']) < 5)
+            ):
+                if msg['Type'] == 'Recording':
+                    msg['Text'](msg['FileName'])
                     time.sleep(random.random())
-                    itchat.send('我在'+timer+'说：\n' + msg['Content'], toUserName=room_id_family)
-                else:
-                    time.sleep(random.uniform(0.1, 0.3))
-                    itchat.send(msg['ActualNickName']+'在'+timer+'说：\n' + msg['Content'], toUserName=room_id_family)
-            if '<mpurl>' in msg['Content']:
-                print('a video link......')
-                url = msg['Content'].split('<mpurl>')[1].split('</mpurl')[0]
-                time.sleep(random.random())
-                itchat.send("%s%s:\n%s\n%s" % (
-                msg['ActualNickName'] + '在' + timer + '分享的链接,', msg['Type'], msg['FileName'], url),
-                            toUserName=room_id_family)
-            elif msg['Type'] == 'Sharing':
-                print('a sharing......')
-                time.sleep(random.random())
-                itchat.send("%s%s:\n%s\n%s" % (msg['ActualNickName']+'在'+timer + '分享的链接,', msg['Type'], msg['FileName'],
-                                               msg['Url']), toUserName=room_id_family)
-            if msg['Type'] == 'Map':
-                print('a map......')
-                time.sleep(random.random())
-                itchat.send("%s%s:\n%s%s" % (msg['ActualNickName']+'在'+timer + '发的位置，', msg['Type'],
-                                           msg['Content'][:msg['Content'].index(':')] + '，' +
-                                           msg['OriContent'][msg['OriContent'].index('poiname=\"')+9:msg['OriContent']
-                                             .index('\" poiid=')],
-                                           '\n' + msg['Url'] + '。'), toUserName=room_id_family)
+                    itchat.send(msg['ActualNickName']+'在'+timer + '发的语音：', toUserName=room_id_family)
+                    itchat.send('@%s@%s' % ('fil', msg['FileName']), toUserName=room_id_family)
+                if msg['Type'] == 'Picture':
+                    msg['Text'](msg['FileName'])
+                    time.sleep(random.random())
+                    itchat.send(msg['ActualNickName']+'在'+timer + '发的图片：', toUserName=room_id_family)
+                    itchat.send('@%s@%s' % ('img', msg['FileName']), toUserName=room_id_family)
+                if msg['Type'] == 'Video':
+                    msg['Text'](msg['FileName'])
+                    time.sleep(random.random())
+                    itchat.send(msg['ActualNickName']+'在'+timer + '发的视频：', toUserName=room_id_family)
+                    itchat.send('@%s@%s' % ('vid', msg['FileName']), toUserName=room_id_family)
+                if msg['Type'] == 'Attachment':
+                    msg['Text'](msg['FileName'])
+                    time.sleep(random.random())
+                    itchat.send(msg['ActualNickName']+'在'+timer + '发的文件：', toUserName=room_id_family)
+                    itchat.send('@%s@%s' % ('fil', msg['FileName']), toUserName=room_id_family)
+                if msg['Type'] == 'Text':
+                    if msg['FromUserName'] == itchat.get_friends(update=True)[0]['UserName']:
+                        time.sleep(random.random())
+                        itchat.send('我在'+timer+'说：\n' + msg['Content'], toUserName=room_id_family)
+                    else:
+                        time.sleep(random.uniform(0.1, 0.3))
+                        itchat.send(msg['ActualNickName']+'在'+timer+'说：\n' + msg['Content'], toUserName=room_id_family)
+                if '<mpurl>' in msg['Content']:
+                    print('a video link......')
+                    url = msg['Content'].split('<mpurl>')[1].split('</mpurl')[0]
+                    time.sleep(random.random())
+                    itchat.send("%s%s:\n%s\n%s" % (
+                    msg['ActualNickName'] + '在' + timer + '分享的链接,', msg['Type'], msg['FileName'], url),
+                                toUserName=room_id_family)
+                elif msg['Type'] == 'Sharing':
+                    print('a sharing......')
+                    time.sleep(random.random())
+                    itchat.send("%s%s:\n%s\n%s" % (msg['ActualNickName']+'在'+timer + '分享的链接,', msg['Type'], msg['FileName'],
+                                                   msg['Url']), toUserName=room_id_family)
+                if msg['Type'] == 'Map':
+                    print('a map......')
+                    time.sleep(random.random())
+                    itchat.send("%s%s:\n%s%s" % (msg['ActualNickName']+'在'+timer + '发的位置，', msg['Type'],
+                                               msg['Content'][:msg['Content'].index(':')] + '，' +
+                                               msg['OriContent'][msg['OriContent'].index('poiname=\"')+9:msg['OriContent']
+                                                 .index('\" poiid=')],
+                                               '\n' + msg['Url'] + '。'), toUserName=room_id_family)
 
 
 itchat.run()
