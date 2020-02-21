@@ -6,6 +6,10 @@ import datetime
 import random
 from itchat.content import *
 from apscheduler.schedulers.background import BackgroundScheduler
+import socket
+
+socket.setdefaulttimeout(10)
+
 
 print('全体注意！机器人现在开始登录。。。。。。\n' + time.strftime('%Y.%m.%d %H:%M:%S', time.localtime(time.time())))
 
@@ -65,7 +69,7 @@ def send_message_to_computer():
     itchat.send('早上好，又得麻烦大家:\n1.有无发热等新增情况？如果没有就不用上报了；\n2.健康台账不要忘了每天上午下午填写那个腾讯文档电子表格。', toUserName=room_id_computer)
 
 
-scheduler.add_job(send_message_to_class, 'cron', hour=6, minute=50, second=0, args=())
+# scheduler.add_job(send_message_to_class, 'cron', hour=6, minute=50, second=0, args=())
 scheduler.add_job(send_message_to_education, 'cron', hour=8, minute=30, second=0, args=())
 scheduler.add_job(send_message_to_school, 'cron', hour=8, minute=0, second=0, args=())
 scheduler.add_job(send_message_to_computer, 'cron', hour=7, minute=50, second=0, args=())
@@ -106,7 +110,7 @@ def text_reply(msg):
                 itchat.send(msg['ActualNickName']+'在'+timer + '发的文件：', toUserName=room_id_family)
                 itchat.send('@%s@%s' % ('fil', msg['FileName']), toUserName=room_id_family)
             if msg['Type'] == 'Text':
-                if (('[强]' in msg['Content']) and ('@' in msg['Content']) and (len(msg['Content']) < 20)) or (len(msg['Content']) < 10):
+                if (('[强]' in msg['Content']) and ('@' in msg['Content']) and (len(msg['Content']) < 20)) or (len(msg['Content']) < 12):
                     pass
                 else:
                     time.sleep(random.uniform(0.1, 0.3))
