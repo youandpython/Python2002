@@ -15,7 +15,8 @@ for page in range(1, 101):
     titles = soup.find_all(class_='treeReplyItem')
     for i in range(len(titles)):
         j += 1
-        title = titles[i].p.a.text.replace('\t', '').replace(' ', '').replace('\n', '').replace('\r', '')
+        # title = titles[i].p.a.text.replace('\t', '').replace(' ', '').replace('\n', '').replace('\r', '')
+        title = titles[i].p.a.get_text().strip()
         print(str(j) + '.' + title)
         with open('_titles.txt', 'a', encoding='utf-8') as f:
             f.write(str(j) + '.' + title + '\n')

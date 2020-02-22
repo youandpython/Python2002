@@ -1,3 +1,4 @@
+# coding=utf-8
 import requests
 from bs4 import BeautifulSoup
 import time
@@ -13,15 +14,16 @@ for page in range(1, num+1):
     print(f'the page {page} crawling.........')
     r = requests.get(url_, headers=headers).text
     soup = BeautifulSoup(r, 'html.parser')
-    titles = soup.find_all('a', class_='bt')
+    titles = soup.find_all('a', 'bt')
     for title in titles:
-        try:
-            i += 1
-            title = str(title)[:-4].split('>')[1]
-            time.sleep(0.2)
-            print(str(i)+'.'+title)
-            with open('url.txt', 'a') as f:
-                f.write(str(i)+'.'+title+'\n')
-        except:
-            pass
+        # try:
+        i += 1
+        title = title.get_text()
+        time.sleep(0.2)
+        print(str(i)+'.'+title)
+        with open('news_title.txt', 'a', encoding='utf-8') as f:
+            # f.write(str(i)+'.'+title+'\n')
+            f.write(title+'\n')
+        # except:
+        #     pass
 
