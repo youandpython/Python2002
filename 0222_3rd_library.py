@@ -1,3 +1,4 @@
+# coding=utf-8
 # pip, PyInstaller，这是第一节的内容，基础知识，几乎涉及不到代码。
 """
 下面是第二节
@@ -63,19 +64,23 @@ for word in words:
         continue
     else:
         counts[word] = counts.get(word, 0) + 1
+
 items = list(counts.items())
 items.sort(key=lambda x: x[1], reverse=True)
 use_dic = {}
 for item in range(10):
     use_dic[items[item][0]] = items[item][1]
+
 plt.rcParams['font.sans-serif'] = ['SimHei']
 labels = use_dic.keys()
 data = use_dic.values()
+
 explode = (0.1, 0.01, 0.1, 0.02, 0.1, 0.1, 0.01, 0.1, 0.02, 0.1)
 plt.title('高频词饼状图')
 plt.pie(data, labels=labels, explode=explode, autopct='%1.1f%%')
 plt.savefig('word_pie.png')
 plt.show()
+
 plt.bar(labels, data)
 plt.title('高频词柱状图')
 plt.savefig('word_bar.png')
